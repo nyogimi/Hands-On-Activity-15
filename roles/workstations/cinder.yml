@@ -1,0 +1,24 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: Installing Updates and Upgrading (Ubuntu)
+    tags: always
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+- hosts: workstations
+  become: true
+  tasks:
+
+  - name: Installing Cinder (Ubuntu)
+    apt:
+      name:
+          - cinder-api
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
